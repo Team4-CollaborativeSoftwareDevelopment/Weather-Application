@@ -4,7 +4,7 @@ A new Flutter project.
 
 ## Getting Started
 
-Welcome to the Weather App, a Flutter-based application that provides accurate and up-to-date weather information for your location and beyond.
+Welcome to the Weather_Forecast, a Flutter-based application that provides accurate and up-to-date weather information for your location and beyond.
 
 With this app, you can stay informed about the current weather conditions, as well as the forecast for the upcoming days. You can also receive alerts for severe weather events in your area, and customize the app to suit your preferences.
 
