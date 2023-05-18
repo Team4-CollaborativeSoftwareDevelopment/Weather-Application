@@ -95,7 +95,7 @@ class WeatherTileWidget extends StatelessWidget {
               ),
             ),
             Container(
-                margin: const EdgeInsets.only(right: 160),
+                margin: const EdgeInsets.only(right: 320),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Container(
