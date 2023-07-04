@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:weather_forecast/screens/cities.dart';
 import 'package:weather_forecast/screens/home_page.dart';
+import 'package:weather_forecast/screens/weather_forecast_screen.dart';
 import 'package:weather_forecast/widgets/Wcard.dart';
 
 class Index extends StatefulWidget {
@@ -12,18 +13,45 @@ class Index extends StatefulWidget {
   State<Index> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<Index> {
+class _MyAppState extends State<Index> with TickerProviderStateMixin {
   int _selectedIndex = 0;
+  late AnimationController _animationController;
+  late Animation<double> _animation;
 
   static final List<Widget> _pages = <Widget>[
     const MyHomePage(title: 'hey'),
     const Cities(),
+    WeatherForecastScreen(),
   ];
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (_selectedIndex != index) {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+      value: 1.0,
+    );
+    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeInOut,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -38,7 +66,7 @@ class _MyAppState extends State<Index> {
           child: GNav(
             color: Colors.black,
             activeColor: Colors.white,
-            tabBackgroundColor: Colors.lightBlueAccent,
+            tabBackgroundColor: Colors.purple.shade300,
             gap: 8,
             padding: EdgeInsets.all(14),
             tabs: const [
@@ -56,10 +84,31 @@ class _MyAppState extends State<Index> {
               ),
             ],
             selectedIndex: _selectedIndex,
-            onTabChange: _onItemTapped,
+            onTabChange: (index) {
+              _animationController.forward(from: 0.0);
+              _onItemTapped(index);
+            },
           ),
         ),
-        body: _pages[_selectedIndex],
+        body: AnimatedBuilder(
+          animation: _animationController,
+          builder: (context, child) {
+            if (_animationController.value == 1.0) {
+              return IndexedStack(
+                index: _selectedIndex,
+                children: _pages,
+              );
+            } else {
+              return FadeTransition(
+                opacity: _animation,
+                child: IndexedStack(
+                  index: _selectedIndex,
+                  children: _pages,
+                ),
+              );
+            }
+          },
+        ),
       ),
     );
   }

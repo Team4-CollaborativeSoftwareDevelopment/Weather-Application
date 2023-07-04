@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../const/linkWebsite.dart';
 import 'info_widget.dart';
 
 class WeatherTileWidget extends StatelessWidget {
@@ -51,7 +52,7 @@ class WeatherTileWidget extends StatelessWidget {
             child: Text(
               subTitle ?? '',
               style: const TextStyle(
-                fontSize: 14.0,
+                fontSize: 20.0,
                 color: Colors.white,
               ),
             ),
@@ -95,7 +96,7 @@ class WeatherTileWidget extends StatelessWidget {
               ),
             ),
             Container(
-                margin: const EdgeInsets.only(right: 320),
+                margin: const EdgeInsets.only(right: 195),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Container(
@@ -127,7 +128,8 @@ class WeatherTileWidget extends StatelessWidget {
                 ),
               ),
             ),
-            FaIcon(FontAwesomeIcons.circleInfo, color: Colors.white),
+            MyClickableIcon(
+                websiteUrl: 'https://hazza-fix.netlify.app/index.html'),
           ],
         ),
       ],

@@ -3,16 +3,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_forecast/const/const.dart';
 
-
-class ForeCastTileWidget extends StatelessWidget{
+class ForeCastTileWidget extends StatelessWidget {
   String? temp;
   String? time;
+  String? weatherCondition;
 
-
-  ForeCastTileWidget({super.key, required this.temp, required this.time});
+  ForeCastTileWidget(
+      {Key? key,
+      required this.temp,
+      required this.time,
+      required this.weatherCondition})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    String weatherIcon = getWeatherIcon(weatherCondition);
+
     return Card(
       elevation: 8,
       color: Color(colorBg3),
@@ -24,20 +30,42 @@ class ForeCastTileWidget extends StatelessWidget{
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(temp ?? '', style: const TextStyle(color: Colors.white),),
+              Text(
+                temp ?? '',
+                style: const TextStyle(color: Colors.white),
+              ),
               CachedNetworkImage(
-                imageUrl: 'https://openweathermap.org/img/wn/11d.png',
+                imageUrl: 'http://openweathermap.org/img/wn/$weatherIcon.png',
                 height: 50,
                 width: 50,
                 fit: BoxFit.fill,
-                progressIndicatorBuilder: (context,url,downloadProgress) =>const CircularProgressIndicator(),
-                errorWidget: (context,url,err) => const Icon(Icons.image,color: Colors.white,),
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, err) => const Icon(
+                  Icons.image,
+                  color: Colors.white,
+                ),
               ),
-              Text(time ?? '', style: const TextStyle(color: Colors.white),),
+              Text(
+                time ?? '',
+                style: const TextStyle(color: Colors.white),
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  String getWeatherIcon(String? weatherCondition) {
+    if (weatherCondition == 'Clear') {
+      return '01d';
+    } else if (weatherCondition == 'Clouds') {
+      return '02d';
+    } else if (weatherCondition == 'Rain') {
+      return '10d';
+    } else {
+      return '01d';
+    }
   }
 }
