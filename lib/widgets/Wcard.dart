@@ -1,62 +1,89 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../const/const.dart';
-
+import '../screens/cities.dart';
+import 'info_widget.dart';
 
 class Wcard extends StatelessWidget {
-  Wcard({
-    Key? key,
-    required this.city,
-    required this.temperature,
-    required this.date,
-  }) : super(key: key);
-
+  final String date;
   final String city;
   final String temperature;
-  final String date;
+  final String humidity;
+  final String cloudiness;
+  final String windSpeed;
+  final List<HourlyForecast> hourlyForecast;
+
+  const Wcard({
+    required this.date,
+    required this.city,
+    required this.temperature,
+    required this.humidity,
+    required this.cloudiness,
+    required this.windSpeed,
+    required this.hourlyForecast,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 3,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(15),
       ),
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Color(colorBg1), Color(colorBg2)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        width: 300,
-        height: 100,// Adjust the width as desired
-        padding: EdgeInsets.all(16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      color: Colors.purple.shade200,
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  city,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'Date: $date',
-                  style: const TextStyle(fontSize: 13, color: Colors.white),
-                ),
-              ],
+            Text(
+              date,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              city,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              temperature,
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              'Humidity: $humidity',
+              style: const TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+              ),
             ),
             Text(
-              '$temperature °C',
-              style: const TextStyle(fontSize: 30, color: Colors.white),
+              'Cloudiness: $cloudiness',
+              style: const TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+              ),
+            ),
+            Text(
+              'Wind Speed: $windSpeed',
+              style: const TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+              ),
             ),
           ],
         ),
